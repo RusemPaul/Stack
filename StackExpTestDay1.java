@@ -1,8 +1,84 @@
+import java.util.Stack;
+import java.lang.Math;
+
 public class StackExpTestDay1
 {
  public static double evalAns(String exp)
  {
-  System.out.println("change");
+  Stack<Double> computer = new Stack<Double>();
+  for (int i = 0; i < exp.length(); i++)
+  {
+    String part = exp.substring(i, i + 1);
+    if (!(isOperator(part)))
+    {
+      computer.push(Double.parseDouble(part));
+    }
+    else
+    {
+      if (part.equals("+"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(y + x);
+      }
+      if (part.equals("-"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(y - x);
+      }
+      if (part.equals("*"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(y * x);
+      }
+      if (part.equals("/"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(y / x);
+      }
+      if (part.equals("^"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(Math.pow(y, x));
+      }
+      if (part.equals("!"))
+      {
+        double x = computer.pop();
+        computer.push(factorial(x));
+      }
+      if (part.equals("%"))
+      {
+        double x = computer.pop();
+        double y = computer.pop();
+        computer.push(y % x);
+      }
+    }
+  }
+  return computer.pop();
+ }
+ 
+ public static boolean isOperator(String s)
+ {
+   return s.equals("!") ||
+       s.equals("+") ||
+       s.equals("-") ||
+       s.equals("*") ||
+       s.equals("/") ||
+       s.equals("^") ||
+       s.equals("%");
+ }
+ 
+ public static double factorial(double n)
+ {
+   if (n == 1)
+   {
+     return n;
+   }
+   return n * factorial(n - 1);
  }
  
   public static void main(String[] args)
